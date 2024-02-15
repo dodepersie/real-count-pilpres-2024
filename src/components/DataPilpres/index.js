@@ -1,8 +1,9 @@
-"use client";
+"use client"
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import ReactApexChart from "react-apexcharts";
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -58,6 +59,7 @@ const DataPilpres = ({ data, nama }) => {
         options: {
           chart: {
             width: 400,
+            height: 300,
           },
           legend: {
             show: false,
@@ -76,11 +78,12 @@ const DataPilpres = ({ data, nama }) => {
 
         <div className="flex flex-col justify-center items-center border border-gray-200 shadow rounded-xl gap-4">
           <div className="pt-4">
-            <ReactApexChart
+            <ApexCharts
               options={options}
               series={options.series}
               type="pie"
-              width="500"
+              width={"500"}
+              height={400}
             />
           </div>
 
