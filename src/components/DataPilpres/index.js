@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import ReactApexChart from "react-apexcharts";
 
 function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -18,12 +22,50 @@ const formatDate = (timestamp) => {
 };
 
 const DataPilpres = ({ data, nama }) => {
+  const [chartData, setChartData] = useState([]);
   const formattedTimestamp = formatDate(data.ts);
   const progressTps = data.progres.progres;
   const totalTps = data.progres.total;
   const persen = data.chart["persen"];
-
   const chartKeys = Object.keys(data.chart).filter((key) => key !== "persen");
+
+  useEffect(() => {
+    const preparedData = Object.keys(data.chart)
+      .filter((key) => key !== "persen")
+      .map((key) => {
+        const namaPaslon = nama[key]?.nama;
+        const jumlahSuara = data.chart[key];
+        return {
+          name: namaPaslon,
+          data: jumlahSuara,
+        };
+      });
+    setChartData(preparedData);
+  }, [data, nama]);
+  const options = {
+    chart: {
+      id: "persentase-paslon",
+    },
+    legend: {
+      position: "bottom",
+    },
+    labels: chartData.map((item) => item.name),
+    series: chartData.map((item) => item.data),
+    colors: ["#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0"],
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 400,
+          },
+          legend: {
+            show: false,
+          },
+        },
+      },
+    ],
+  };
 
   return (
     <div>
@@ -31,50 +73,52 @@ const DataPilpres = ({ data, nama }) => {
         <h1 className="text-2xl font-semibold text-center">
           Hasil Suara Real Count Pilpres Nasional 2024
         </h1>
-        <table className="border-2 border-gray-200 shadow-md w-full text-sm text-left">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-200">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Nomor Urut
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Nama Paslon
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Jumlah Suara
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {chartKeys.map((key, index) => {
-              const namaPaslon = nama[key]?.nama;
-              const nomorUrut = nama[key]?.nomor_urut;
-              const jumlahSuara = formatNumber(data.chart[key]);
 
-              return (
-                <tr className="bg-white border-b" key={index}>
-                  <td className="px-6 py-4">{nomorUrut}</td>
-                  <td className="px-6 py-4">{namaPaslon}</td>
-                  <td className="px-6 py-4">{jumlahSuara}</td>
+        <div className="flex flex-col justify-center items-center border border-gray-200 shadow rounded-xl gap-4">
+          <div className="pt-4">
+            <ReactApexChart
+              options={options}
+              series={options.series}
+              type="pie"
+              width="500"
+            />
+          </div>
+
+          <div className="p-8 md:p-0">
+            <table className="shadow border border-gray-200 text-sm text-left">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Nomor Urut
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Nama Paslon
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Jumlah Suara
+                  </th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {chartKeys.map((key, index) => {
+                  const namaPaslon = nama[key]?.nama;
+                  const nomorUrut = nama[key]?.nomor_urut;
+                  const jumlahSuara = formatNumber(data.chart[key]);
 
-        <div className="fixed bottom-4 left-0 p-4">
-          <div className="text-center text-xs p-4 backdrop-blur-sm bg-slate-900/70 text-white leading-loose rounded-lg">
-            <span>Versi data: {formattedTimestamp}</span>
-
-            <span> - </span>
-
-            <span>
-              {progressTps} dari {totalTps} TPS ({persen}%)
-            </span>
+                  return (
+                    <tr className="bg-white border-b" key={index}>
+                      <td className="px-6 py-4">{nomorUrut}</td>
+                      <td className="px-6 py-4">{namaPaslon}</td>
+                      <td className="px-6 py-4 font-bold">{jumlahSuara}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <div className="flex flex-col justify-center items-center text-xs gap-3">
+        <div className="flex flex-col justify-center items-center text-sm text-center gap-3">
           <Link href="/wilayah" className="underline cursor-help">
             Klik untuk melihat hasil real count berdasarkan wilayah
           </Link>
@@ -88,7 +132,19 @@ const DataPilpres = ({ data, nama }) => {
               Komisi Pemilihan Umum Indonesia
             </Link>
           </span>{" "}
-          <span>Coded by: dode_p3rsie</span>
+          <span>&copy; 2024 dode_p3rsie</span>
+        </div>
+      </div>
+
+      <div className="fixed bottom-4 right-0 p-4">
+        <div className="text-center text-sm p-4 backdrop-blur-sm bg-slate-900/70 text-white leading-loose rounded-lg">
+          <span>Versi data: {formattedTimestamp}</span>
+
+          <span> - </span>
+
+          <span>
+            {progressTps} dari {totalTps} TPS ({persen}%)
+          </span>
         </div>
       </div>
     </div>

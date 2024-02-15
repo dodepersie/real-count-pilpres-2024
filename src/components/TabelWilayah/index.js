@@ -23,7 +23,7 @@ const TabelData = ({ data, wilayah, nama }) => {
           </th>
         ))}
         <th scope="col" className="px-6 py-3">
-          Persen
+          Progres Suara
         </th>
       </tr>
     );
@@ -74,7 +74,7 @@ const TabelData = ({ data, wilayah, nama }) => {
         </table>
       </div>
 
-      <div className="flex flex-col justify-center items-center text-xs gap-3">
+      <div className="flex flex-col justify-center items-center text-sm text-center gap-3">
         <Link href="/" className="underline">
           Kembali ke halaman awal
         </Link>
@@ -88,7 +88,7 @@ const TabelData = ({ data, wilayah, nama }) => {
             Komisi Pemilihan Umum Indonesia
           </Link>
         </span>{" "}
-        <span>Coded by: dode_p3rsie</span>
+        <span>&copy; 2024 dode_p3rsie</span>
       </div>
     </div>
   );
