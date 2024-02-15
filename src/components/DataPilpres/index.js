@@ -21,6 +21,9 @@ const DataPilpres = ({ data, nama }) => {
   const formattedTimestamp = formatDate(data.ts);
   const progressTps = data.progres.progres;
   const totalTps = data.progres.total;
+  const persen = data.chart["persen"];
+
+  const chartKeys = Object.keys(data.chart).filter((key) => key !== "persen");
 
   return (
     <div>
@@ -43,7 +46,7 @@ const DataPilpres = ({ data, nama }) => {
             </tr>
           </thead>
           <tbody>
-            {Object.keys(data.chart).map((key, index) => {
+            {chartKeys.map((key, index) => {
               const namaPaslon = nama[key]?.nama;
               const nomorUrut = nama[key]?.nomor_urut;
               const jumlahSuara = formatNumber(data.chart[key]);
@@ -60,11 +63,11 @@ const DataPilpres = ({ data, nama }) => {
         </table>
 
         <div className=" fixed bottom-4 left-0 p-4">
-          <div className="text-center text-xs p-4 backdrop-blur-sm bg-slate-700/50 text-white leading-loose rounded-lg">
+          <div className="text-center text-xs p-4 backdrop-blur-sm bg-slate-900/70 text-white leading-loose rounded-lg">
             <span>Versi data: {formattedTimestamp}</span>
 
             <span>
-              {progressTps} dari {totalTps} TPS
+              {progressTps} dari {totalTps} TPS ({persen}%)
             </span>
           </div>
         </div>
