@@ -62,9 +62,11 @@ const DataPilpres = ({ data, nama }) => {
           </tbody>
         </table>
 
-        <div className=" fixed bottom-4 left-0 p-4">
+        <div className="fixed bottom-4 left-0 p-4">
           <div className="text-center text-xs p-4 backdrop-blur-sm bg-slate-900/70 text-white leading-loose rounded-lg">
             <span>Versi data: {formattedTimestamp}</span>
+
+            <span> - </span>
 
             <span>
               {progressTps} dari {totalTps} TPS ({persen}%)
