@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
 import dynamic from "next/dynamic";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useEffect, useState } from "react";
+const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -59,10 +58,7 @@ const DataPilpres = ({ data, nama }) => {
         options: {
           chart: {
             width: 400,
-            height: 300,
-          },
-          legend: {
-            show: false,
+            height: 400,
           },
         },
       },
@@ -71,71 +67,48 @@ const DataPilpres = ({ data, nama }) => {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center min-h-screen space-y-4">
-        <h1 className="text-2xl font-semibold text-center">
-          Hasil Suara Real Count Pilpres Nasional 2024
-        </h1>
-
-        <div className="flex flex-col justify-center items-center border border-gray-200 shadow rounded-xl gap-4">
-          <div className="pt-4">
-            <ApexCharts
-              options={options}
-              series={options.series}
-              type="pie"
-              width={"500"}
-              height={400}
-            />
-          </div>
-
-          <div className="p-8 md:p-0">
-            <table className="shadow border border-gray-200 text-sm text-left">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-200">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Nomor Urut
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Nama Paslon
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Jumlah Suara
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {chartKeys.map((key, index) => {
-                  const namaPaslon = nama[key]?.nama;
-                  const nomorUrut = nama[key]?.nomor_urut;
-                  const jumlahSuara = formatNumber(data.chart[key]);
-
-                  return (
-                    <tr className="bg-white border-b" key={index}>
-                      <td className="px-6 py-4">{nomorUrut}</td>
-                      <td className="px-6 py-4">{namaPaslon}</td>
-                      <td className="px-6 py-4 font-bold">{jumlahSuara}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+      <div className="flex flex-col justify-center items-center border-0 md:border border-gray-200">
+        <div className="pt-4">
+          <ApexCharts
+            options={options}
+            series={options.series}
+            type="pie"
+            width={"500"}
+            height={400}
+          />
         </div>
 
-        <div className="flex flex-col justify-center items-center text-sm text-center gap-3">
-          <Link href="/wilayah" className="underline cursor-help">
-            Klik untuk melihat hasil real count berdasarkan wilayah
-          </Link>
-          <span>
-            Sumber data:{" "}
-            <Link
-              href="https://pemilu2024.kpu.go.id/pilpres/hitung-suara/"
-              target="_blank"
-              className="underline"
-            >
-              Komisi Pemilihan Umum Indonesia
-            </Link>
-          </span>{" "}
-          <span>&copy; 2024 dode_p3rsie</span>
+        <div className="p-4">
+          <table className="border border-gray-200 text-sm text-left">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-200">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  Nomor Urut
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Nama Paslon
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Jumlah Suara
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {chartKeys.map((key, index) => {
+                const namaPaslon = nama[key]?.nama;
+                const nomorUrut = nama[key]?.nomor_urut;
+                const jumlahSuara = formatNumber(data.chart[key]);
+
+                return (
+                  <tr className="bg-white border-b hover:bg-gray-200" key={index}>
+                    <td className="px-6 py-4">{nomorUrut}</td>
+                    <td className="px-6 py-4">{namaPaslon}</td>
+                    <td className="px-6 py-4 font-bold">{jumlahSuara}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
 
