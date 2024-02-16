@@ -33,12 +33,12 @@ const Home = () => {
         {hasilData && namaPaslon && (
           <DataPilpres data={hasilData} nama={namaPaslon} />
         )}
-        <ProgresTPS data={hasilData} />
         <Footer
           link="/wilayah"
           text="Klik untuk melihat real count berdasarkan wilayah"
         />
       </div>
+      <ProgresTPS data={hasilData} />
     </div>
   );
 };

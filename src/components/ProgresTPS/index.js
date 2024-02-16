@@ -4,7 +4,7 @@ const formatDate = (timestamp) => {
   if (isNaN(date.getTime())) return "";
   const options = {
     day: "numeric",
-    month: "long",
+    month: "short",
     year: "numeric",
     hour: "numeric",
     minute: "numeric",
@@ -23,7 +23,7 @@ const ProgresTPS = ({ data }) => {
   return (
     <div className="fixed bottom-4 right-0 p-4">
       <div className="text-center text-sm p-4 backdrop-blur-sm bg-slate-900/70 text-white leading-loose rounded-lg">
-        <span>Versi data: {formattedTimestamp}</span>
+        <span>Versi: {formattedTimestamp}</span>
 
         <span> - </span>
 

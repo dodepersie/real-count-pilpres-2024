@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import TabelWilayah from "@/components/TabelWilayah";
 import { getHitungData, getHasilWilayah, getNamaPaslon } from "@/libs/api-libs";
 import Footer from "@/components/Footer";
+import ProgresTPS from "@/components/ProgresTPS";
 
 const Wilayah = () => {
   const [hasilData, setHasilData] = useState(null);
@@ -43,6 +44,7 @@ const Wilayah = () => {
         />
       )}
       <Footer link="/" text="Kembali ke halaman awal" />
+      <ProgresTPS data={hasilData} />
     </div>
   );
 };
