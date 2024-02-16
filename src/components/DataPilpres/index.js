@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import ProgresTPS from "../ProgresTPS";
 const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 function formatNumber(number) {
@@ -67,7 +68,7 @@ const DataPilpres = ({ data, nama }) => {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center border-0 md:border border-gray-200">
+      <div className="flex flex-col justify-center items-center border-0 md:border border-gray-200 shadow-none md:shadow rounded-lg">
         <div className="pt-4">
           <ApexCharts
             options={options}
@@ -109,18 +110,6 @@ const DataPilpres = ({ data, nama }) => {
               })}
             </tbody>
           </table>
-        </div>
-      </div>
-
-      <div className="fixed bottom-4 right-0 p-4">
-        <div className="text-center text-sm p-4 backdrop-blur-sm bg-slate-900/70 text-white leading-loose rounded-lg">
-          <span>Versi data: {formattedTimestamp}</span>
-
-          <span> - </span>
-
-          <span>
-            {progressTps} dari {totalTps} TPS ({persen}%)
-          </span>
         </div>
       </div>
     </div>

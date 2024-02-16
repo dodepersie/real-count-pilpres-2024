@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import TabelWilayah from "@/components/TabelWilayah";
 import { getHitungData, getHasilWilayah, getNamaPaslon } from "@/libs/api-libs";
+import Footer from "@/components/Footer";
 
 const Wilayah = () => {
   const [hasilData, setHasilData] = useState(null);
@@ -42,22 +42,7 @@ const Wilayah = () => {
           nama={namaPaslon}
         />
       )}
-      <div className="flex flex-col justify-center items-center text-sm text-center gap-3">
-        <Link href="/" className="underline">
-          Kembali ke halaman awal
-        </Link>
-        <span>
-          Sumber data:{" "}
-          <Link
-            href="https://pemilu2024.kpu.go.id/pilpres/hitung-suara/"
-            target="_blank"
-            className="underline"
-          >
-            Komisi Pemilihan Umum Indonesia
-          </Link>
-        </span>{" "}
-        <span>&copy; 2024 dode_p3rsie</span>
-      </div>
+      <Footer link="/" text="Kembali ke halaman awal" />
     </div>
   );
 };
