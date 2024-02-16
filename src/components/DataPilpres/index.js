@@ -2,32 +2,14 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import ProgresTPS from "../ProgresTPS";
 const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-const formatDate = (timestamp) => {
-  const date = new Date(timestamp);
-  const options = {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-  };
-  return new Intl.DateTimeFormat("id-ID", options).format(date);
-};
-
 const DataPilpres = ({ data, nama }) => {
   const [chartData, setChartData] = useState([]);
-  const formattedTimestamp = formatDate(data.ts);
-  const progressTps = data.progres.progres;
-  const totalTps = data.progres.total;
-  const persen = data.chart["persen"];
   const chartKeys = Object.keys(data.chart).filter((key) => key !== "persen");
 
   useEffect(() => {
