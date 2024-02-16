@@ -32,7 +32,7 @@ const Wilayah = () => {
   }, []);
 
   return (
-    <div className="container mx-auto max-w-5xl overflow-hidden p-4 space-y-4">
+    <div className="container mx-auto max-w-5xl overflow-hidden p-4 pb-32 lg:pb-4 space-y-4">
       <h1 className="text-2xl font-semibold text-center">
         Hasil Real Count Pilpres Berdasarkan Wilayah 2024
       </h1>
